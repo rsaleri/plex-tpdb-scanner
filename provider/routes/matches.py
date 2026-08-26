@@ -31,7 +31,7 @@ async def match_media(request: Request):
         )
 
     logger.debug("Match request: %s", body.model_dump())
-    title = body.title
+    title = body.effective_title
     year = body.year
     media_type = body.type
 

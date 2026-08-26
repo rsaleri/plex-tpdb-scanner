@@ -1,9 +1,12 @@
 """Pydantic models for the Plex provider HTTP boundary."""
 
 from typing import Any
+from pathlib import PurePosixPath
 
-from pydantic import BaseModel, ConfigDict, Field
+from pydantic import BaseModel, ConfigDict, Field, computed_field
 
+from provider.config import get_settings
+settings = get_settings()
 
 class PlexMatchRequest(BaseModel):
     """Subset of Plex's match request used by this provider."""
@@ -13,7 +16,14 @@ class PlexMatchRequest(BaseModel):
     type: int = 1
     title: str = ""
     year: int | None = None
+    filename: str = ""
 
+    @computed_field
+    @property
+    def effective_title(self) -> str:
+        if not self.filename or settings.tpdb_prefer_filename == 0:
+            return self.title
+        return PurePosixPath(self.filename).stem
 
 class PlexImage(BaseModel):
     """Canonical Plex image asset."""
