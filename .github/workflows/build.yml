@@ -67,5 +67,5 @@ jobs:
           context: .
           push: true
           tags: |
-            ghcr.io/adeze/plex-tpdb-scanner:${{ steps.version.outputs.version }}
-            ghcr.io/adeze/plex-tpdb-scanner:latest
+            ghcr.io/rsaleri/plex-tpdb-scanner:${{ steps.version.outputs.version }}
+            ghcr.io/rsaleri/plex-tpdb-scanner:latest
